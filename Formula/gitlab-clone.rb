@@ -1,22 +1,26 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class GitlabClone < Formula
   desc "Tool to clone complete GitLab groups"
   homepage "https://github.com/miguelaferreira/gitlab-clone"
-  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.11/gitlab-clone-macOS"
-  version "v0.1.11"
-  sha256 "9833ca9ccd8f9597a5e73fe7c58670c7b276192a5e55153eed3c7a34acccdd97"
+  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.12/all-files.tar.gz"
+  version "0.1.12"
+  sha256 "2cd2de18dcc151f055bae220f5a304cba6110cf77184c2b5d6e6277b6d1ebef6"
   license "The Unlicense"
 
   bottle :unneeded
 
   def install
-    system "mkdir", bin
-    system "cp", "gitlab-clone-macOS", "#{bin}/gitlab-clone"
+    mkdir bin
+    on_macos do
+        system "shasum", "-c", "gitlab-clone-macOS.sha256sum"
+        system "cp", "gitlab-clone-macOS", "#{bin}/gitlab-clone"
+    end
+    on_linux do
+        system "shasum", "-c", "gitlab-clone-Linux.sha256sum"
+        system "cp", "gitlab-clone-Linux", "#{bin}/gitlab-clone"
+    end
   end
 
   test do
-    system "#{bin}/julia", "--version"
+    system "#{bin}/gitlab-clone", "--version"
   end
 end
