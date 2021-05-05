@@ -4,7 +4,7 @@ class GitlabClone < Formula
   url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.12/all-files.tar.gz"
   version "0.1.12"
   sha256 "2cd2de18dcc151f055bae220f5a304cba6110cf77184c2b5d6e6277b6d1ebef6"
-  license "The Unlicense"
+  license "MIT-Modern-Variant"
 
   bottle :unneeded
 
