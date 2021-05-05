@@ -11,12 +11,13 @@ class GitlabClone < Formula
   def install
     mkdir bin
     on_macos do
-        system "shasum", "-c", "gitlab-clone-macOS.sha256sum"
-        system "cp", "gitlab-clone-macOS", "#{bin}/gitlab-clone"
+      system "shasum", "-c", "gitlab-clone-macOS.sha256sum"
+      cp "gitlab-clone-macOS", "#{bin}/gitlab-clone"
     end
+
     on_linux do
-        system "shasum", "-c", "gitlab-clone-Linux.sha256sum"
-        system "cp", "gitlab-clone-Linux", "#{bin}/gitlab-clone"
+      system "shasum", "-c", "gitlab-clone-Linux.sha256sum"
+      cp "gitlab-clone-Linux", "#{bin}/gitlab-clone"
     end
   end
 
