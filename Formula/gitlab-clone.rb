@@ -1,8 +1,8 @@
 class GitlabClone < Formula
   desc "Tool to clone complete GitLab groups"
   homepage "https://github.com/miguelaferreira/gitlab-clone"
-  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.12/all-files.tar.gz"
-  sha256 "2cd2de18dcc151f055bae220f5a304cba6110cf77184c2b5d6e6277b6d1ebef6"
+  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.13/all-files.tar.gz"
+  sha256 "13338b09bb1127d36082a1f421534418eb0a7e5388762f4f64da7fd47c960f22"
   license "MIT-Modern-Variant"
 
   bottle :unneeded
