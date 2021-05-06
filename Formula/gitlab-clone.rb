@@ -1,8 +1,8 @@
 class GitlabClone < Formula
   desc "Tool to clone complete GitLab groups"
   homepage "https://github.com/miguelaferreira/gitlab-clone"
-  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.16/all-files.tar.gz"
-  sha256 "4e4e93cbbca3cdcead56d59497822bbe7e98cf2c14ee983907855c409f52c380"
+  url "https://github.com/miguelaferreira/gitlab-clone/releases/download/v0.1.17/all-files-v0.1.17.tar.gz"
+  sha256 "5339231e0b7db0e41fbdae5e1102b45625627e11698c6748833fa8344b7f3b0a"
   license "MIT-Modern-Variant"
 
   bottle :unneeded
@@ -10,13 +10,13 @@ class GitlabClone < Formula
   def install
     mkdir bin
     on_macos do
-      system "shasum", "-c", "gitlab-clone-macOS.sha256sum"
-      cp "gitlab-clone-macOS", "#{bin}/gitlab-clone"
+      system "shasum", "-c", "gitlab-clone-macOS-v#{version}.sha256sum"
+      cp "gitlab-clone-macOS-v#{version}", "#{bin}/gitlab-clone"
     end
 
     on_linux do
-      system "shasum", "-c", "gitlab-clone-Linux.sha256sum"
-      cp "gitlab-clone-Linux", "#{bin}/gitlab-clone"
+      system "shasum", "-c", "gitlab-clone-Linux-v#{version}.sha256sum"
+      cp "gitlab-clone-Linux-v#{version}", "#{bin}/gitlab-clone"
     end
   end
 
