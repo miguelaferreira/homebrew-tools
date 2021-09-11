@@ -10,12 +10,12 @@ class DevexCli < Formula
   def install
     mkdir bin
 
-    on_macos do
+    if OS.mac?
       system "shasum", "-c", "devex-macOS-v#{version}.sha256sum"
       cp "devex-macOS-v#{version}", "#{bin}/devex"
     end
 
-    on_linux do
+    if OS.linux?
       system "shasum", "-c", "devex-Linux-v#{version}.sha256sum"
       cp "devex-Linux-v#{version}", "#{bin}/devex"
     end
