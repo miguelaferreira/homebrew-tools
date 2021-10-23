@@ -6,8 +6,6 @@ class DevexCli < Formula
   license "MIT-Modern-Variant"
   head "https://github.com/miguelaferreira/devex-cli.git", branch: "main"
 
-  bottle :unneeded
-
   def install
     mkdir bin
 
