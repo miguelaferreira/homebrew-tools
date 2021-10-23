@@ -5,8 +5,6 @@ class GitlabClone < Formula
   sha256 "a0800a137d99bc749d677f02d073ace038b71f6521c39dceed3af508d694da89"
   license "MIT-Modern-Variant"
 
-  bottle :unneeded
-
   def install
     mkdir bin
 
