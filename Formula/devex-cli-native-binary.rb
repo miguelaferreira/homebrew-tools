@@ -1,4 +1,4 @@
-class DevexCli < Formula
+class DevexCliNativeBinary < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
   url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.1.0/all-files-v1.1.0.tar.gz"
