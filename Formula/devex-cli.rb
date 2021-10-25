@@ -1,28 +1,33 @@
 class DevexCli < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.1.0/all-files-v1.1.0.tar.gz"
-  sha256 "75e922bd70d35329a7ff83b15e9a0a0b7aae4fe47c03fd2bd12577e2f2cd4bd5"
+  url "https://github.com/miguelaferreira/devex-cli/archive/v1.2.0.tar.gz"
+  sha256 "d8018328fe8fb8b652253491e8c76981fad166ac33977e51010eeb99837d28c8"
   license "MIT-Modern-Variant"
-  head "https://github.com/miguelaferreira/devex-cli.git", branch: "main"
+
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
+  depends_on "openjdk"
+
+  conflicts_with "miguelaferreira/tools/devex-cli-native-binary", because: "it also ships a devex executable"
 
   def install
-    mkdir bin
+    system "./gradlew", "assemble", "-x", "test"
 
-    if OS.mac?
-      system "shasum", "-c", "devex-macOS-v#{version}.sha256sum"
-      cp "devex-macOS-v#{version}", "#{bin}/devex"
-    end
+    mkdir_p libexec/"bin"
+    mkdir_p libexec/"lib"
+    mv "build/homebrew-formula/devex", libexec/"bin/devex"
+    mv "build/libs/devex-#{version}-all.jar", libexec/"lib"
 
-    if OS.linux?
-      system "shasum", "-c", "devex-Linux-v#{version}.sha256sum"
-      cp "devex-Linux-v#{version}", "#{bin}/devex"
-    end
+    bin.write_jar_script libexec/"lib/devex-#{version}-all.jar", "devex"
 
-    ohai "🤓 Read the documentation on devex-cli gitbook 📘 at https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
+    ohai "🤓 Check the toolkit docs 📘 out at https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
   end
 
   test do
-    system "#{bin}/devex", "--version"
+    assert_match version, shell_output("#{bin}/devex -V").strip
   end
 end
