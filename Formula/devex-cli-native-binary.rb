@@ -1,28 +1,27 @@
 class DevexCliNativeBinary < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.1.0/all-files-v1.1.0.tar.gz"
-  sha256 "75e922bd70d35329a7ff83b15e9a0a0b7aae4fe47c03fd2bd12577e2f2cd4bd5"
+  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.2.0/all-files-v1.2.0.tar.gz"
+  sha256 "7ecef580d36d4bc2af8edd5d9a14f8d5ffee915f9cdf8ed2dd040fecf0f7633a"
   license "MIT-Modern-Variant"
   head "https://github.com/miguelaferreira/devex-cli.git", branch: "main"
 
+  conflicts_with "miguelaferreira/tools/devex-cli", because: "devex-cli also ships a devex executable"
+
   def install
-    mkdir bin
+    is_os_supported = OS.mac? || OS.linux?
+    raise "Unsupported OS" unless is_os_supported
 
-    if OS.mac?
-      system "shasum", "-c", "devex-macOS-v#{version}.sha256sum"
-      cp "devex-macOS-v#{version}", "#{bin}/devex"
-    end
-
-    if OS.linux?
-      system "shasum", "-c", "devex-Linux-v#{version}.sha256sum"
-      cp "devex-Linux-v#{version}", "#{bin}/devex"
-    end
+    os = OS.mac? ? "macOS" : "Linux"
+    binary = "devex-#{os}-v#{version}"
+    system "shasum", "-c", "#{binary}.sha256sum"
+    mv binary, "devex"
+    bin.install "devex"
 
     ohai "🤓 Read the documentation on devex-cli gitbook 📘 at https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
   end
 
   test do
-    system "#{bin}/devex", "--version"
+    assert_match version, shell_output("#{bin}/devex -V").strip
   end
 end
