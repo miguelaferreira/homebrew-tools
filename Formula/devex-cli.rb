@@ -19,7 +19,6 @@ class DevexCli < Formula
 
     mkdir_p libexec/"bin"
     mkdir_p libexec/"lib"
-    mv "build/homebrew-formula/devex", libexec/"bin/devex"
     mv "build/libs/devex-#{version}-all.jar", libexec/"lib"
 
     bin.write_jar_script libexec/"lib/devex-#{version}-all.jar", "devex"
