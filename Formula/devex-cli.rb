@@ -1,8 +1,8 @@
 class DevexCli < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-  url "https://github.com/miguelaferreira/devex-cli/archive/refs/tags/v1.2.4.tar.gz"
-  sha256 "10692f6799e23e3915cf0f9f2a1cdd7ce0b78819c23a5a8b0a705587a5943fa3"
+  url "https://github.com/miguelaferreira/devex-cli/archive/v1.2.5.tar.gz"
+  sha256 "5a703c0aa3ceb3c3ad8c67b5c7ee0b162feb297b34a2c536718910d0f3a4a72c"
   license "MIT-Modern-Variant"
 
   livecheck do
