@@ -1,8 +1,8 @@
 class DevexCliNativeBinary < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.2.0/all-files-v1.2.0.tar.gz"
-  sha256 "7ecef580d36d4bc2af8edd5d9a14f8d5ffee915f9cdf8ed2dd040fecf0f7633a"
+  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.2.3/all-files-v1.2.3.tar.gz"
+  sha256 "35ae21ef72df89b43abf2df1d0f579b3fb3a2ba824864ac9469d0213a56fd96a"
   license "MIT-Modern-Variant"
   head "https://github.com/miguelaferreira/devex-cli.git", branch: "main"
 
