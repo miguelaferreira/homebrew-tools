@@ -10,7 +10,7 @@ class DevexCli < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  depends_on "openjdk"
+  depends_on "openjdk@17"
 
   conflicts_with "miguelaferreira/tools/devex-cli-native-binary", because: "it also ships a devex executable"
 
