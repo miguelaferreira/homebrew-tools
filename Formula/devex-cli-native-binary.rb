@@ -13,7 +13,8 @@ class DevexCliNativeBinary < Formula
     raise "Unsupported OS" unless is_os_supported
 
     os = OS.mac? ? "macOS" : "Linux"
-    binary = "devex-#{os}-v#{version}"
+    arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+    binary = "devex-#{os}-#{arch}-v#{version}"
     system "shasum", "-c", "#{binary}.sha256sum"
     mv binary, "devex"
     bin.install "devex"
