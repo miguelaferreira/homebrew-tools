@@ -14,6 +14,19 @@ class DevexCliNativeBinary < Formula
 
     os = OS.mac? ? "macOS" : "Linux"
     arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+
+    # No native binary is built for macOS on Intel (amd64): the release matrix
+    # ships Linux amd64, Linux arm64, and macOS arm64 only. Fail early with a
+    # clear message instead of a confusing missing-file error from shasum.
+    if OS.mac? && arch == "amd64"
+      odie <<~EOS
+        devex-cli does not ship a native binary for macOS on Intel (amd64).
+        Supported native targets are macOS arm64, Linux amd64, and Linux arm64.
+        On an Intel Mac, install the JVM formula instead:
+          brew install miguelaferreira/tools/devex-cli
+      EOS
+    end
+
     binary = "devex-#{os}-#{arch}-v#{version}"
     system "shasum", "-c", "#{binary}.sha256sum"
     mv binary, "devex"
