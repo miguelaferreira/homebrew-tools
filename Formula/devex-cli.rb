@@ -1,31 +1,38 @@
 class DevexCli < Formula
   desc "Automating development gruntwork"
   homepage "https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-  url "https://github.com/miguelaferreira/devex-cli/archive/refs/tags/v1.2.8.tar.gz"
-  sha256 "0acd39363148bd2d220b667f2ce7fdd90315f8e3a37a96e735ae2ab05e54a04d"
+  url "https://github.com/miguelaferreira/devex-cli/releases/download/v1.2.8/all-files-v1.2.8.tar.gz"
+  sha256 "8fa0edf2ba6172d1c042d9edb318e331eccb4a43cde69322f250259378b82709"
   license "MIT-Modern-Variant"
+  head "https://github.com/miguelaferreira/devex-cli.git", branch: "main"
 
-  livecheck do
-    url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-  end
-
-  depends_on "openjdk@17"
-
-  conflicts_with "miguelaferreira/tools/devex-cli-native-binary", because: "it also ships a devex executable"
+  conflicts_with "miguelaferreira/tools/devex-cli-jdk", because: "devex-cli-jdk also ships a devex executable"
 
   def install
-    system "./gradlew", "assemble", "-x", "test"
+    is_os_supported = OS.mac? || OS.linux?
+    raise "Unsupported OS" unless is_os_supported
 
-    mkdir_p libexec/"bin"
-    mkdir_p libexec/"lib"
-    mv "build/libs/devex-#{version}-all.jar", libexec/"lib"
+    os = OS.mac? ? "macOS" : "Linux"
+    arch = Hardware::CPU.arm? ? "arm64" : "amd64"
 
-    bin.write_jar_script libexec/"lib/devex-#{version}-all.jar", "devex"
+    # No native binary is built for macOS on Intel (amd64): the release matrix
+    # ships Linux amd64, Linux arm64, and macOS arm64 only. Fail early with a
+    # clear message instead of a confusing missing-file error from shasum.
+    if OS.mac? && arch == "amd64"
+      odie <<~EOS
+        devex-cli does not ship a native binary for macOS on Intel (amd64).
+        Supported native targets are macOS arm64, Linux amd64, and Linux arm64.
+        On an Intel Mac, install the JVM formula instead:
+          brew install miguelaferreira/tools/devex-cli-jdk
+      EOS
+    end
 
-    ohai "🤓 Check the toolkit docs 📘 out at https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
-    ohai "⚠️ devex requires Java 17 to execute"
-    ohai "Please make sure an older version of Java isn't configured via JAVA_HOME ⚠️"
+    binary = "devex-#{os}-#{arch}-v#{version}"
+    system "shasum", "-c", "#{binary}.sha256sum"
+    mv binary, "devex"
+    bin.install "devex"
+
+    ohai "🤓 Read the documentation on devex-cli gitbook 📘 at https://miguelaferreira.gitbook.io/devex/devex-cli/overview"
   end
 
   test do
